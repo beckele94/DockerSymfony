@@ -9,14 +9,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/lucky')]
 class LuckyController extends AbstractController
 {
-
-    #[Route('/number')]
-    public function number(): Response
+    #[Route('/number/{max}')]
+    public function number(int $max): Response
     {
-        $number = random_int(0, 100);
-
-        return $this->render('lucky/number.html.twig', [
-            'toto' => $number,
-        ]);
+        $number = random_int(0, $max);
+        
+        return $this->render('lucky/number.html.twig', ['number' => $number]);
     }
 }
