@@ -16,7 +16,7 @@ class TicketController extends AbstractController
     #[Route('/', name: 'app_ticket_index', methods: ['GET'])]
     public function index(TicketRepository $ticketRepository): Response
     {
-        return $this->render('ticket/index.html.twig', [
+        return $this->render('ticket/list.html.twig', [
             'tickets' => $ticketRepository->findAll(),
         ]);
     }

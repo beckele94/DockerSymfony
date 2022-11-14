@@ -3,7 +3,7 @@
 {% block title %}Ticket index{% endblock %}
 
 {% block body %}
-    <h1>Ticket index</h1>
+    <h1>Liste des tickets</h1>
 
     <table class="table">
         <thead>
@@ -21,8 +21,9 @@
                 <td>{{ ticket.label }}</td>
                 <td>{{ ticket.description }}</td>
                 <td>
-                    <a href="{{ path('app_ticket_show', {'id': ticket.id}) }}">show</a>
-                    <a href="{{ path('app_ticket_edit', {'id': ticket.id}) }}">edit</a>
+                    <a href="{{ path('app_ticket_show', {'id': ticket.id}) }}">voir</a>
+                    <a href="{{ path('app_ticket_edit', {'id': ticket.id}) }}">modifier</a>
+                    <a href="{{ path('app_ticket_delete', {'id': ticket.id}) }}">supprimer</a>
                 </td>
             </tr>
         {% else %}
