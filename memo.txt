@@ -1,0 +1,19 @@
+COMMANDES DOCKERS :
+
+1- docker exec -it <container name> <command>
+   exemple --> docker exec -it docker-ocr4labs-php bash
+   --> ouvre un terminal dans le container selectionné
+
+
+COMMANDES SYMFONY (DANS LA CONSOLE DU CONTAINER PHP) :
+
+1- php bin/console doctrine:mapping:import 'App\Entity' annotation --path=src/Entity
+   --> Generate Entities from an Existing Database
+   php bin/console make:entity --regenerate App
+   --> generate class & getter/setter methods
+
+2- php bin/console debug:router
+   --> liste les routes du projet
+
+3- composer require symfony/asset
+   --> install the asset package (e.g. to insert img asset or css file)
