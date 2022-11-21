@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Ticket;
-use App\Form\Ticket1Type;
+use App\Form\TicketType;
 use App\Repository\TicketRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,7 +25,7 @@ class TicketController extends AbstractController
     public function new(Request $request, TicketRepository $ticketRepository): Response
     {
         $ticket = new Ticket();
-        $form = $this->createForm(Ticket1Type::class, $ticket);
+        $form = $this->createForm(TicketType::class, $ticket);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -51,7 +51,7 @@ class TicketController extends AbstractController
     #[Route('/{id}/edit', name: 'app_ticket_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Ticket $ticket, TicketRepository $ticketRepository): Response
     {
-        $form = $this->createForm(Ticket1Type::class, $ticket);
+        $form = $this->createForm(TicketType::class, $ticket);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

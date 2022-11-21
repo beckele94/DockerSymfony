@@ -5,8 +5,8 @@
 {% block body %}
     <h1>Liste des tickets</h1>
 
-    <table class="table">
-        <thead>
+    <table class="table table-bordered table-hover">
+        <thead class="table-secondary">
             <tr>
                 <th>Id</th>
                 <th>Label</th>
@@ -20,19 +20,18 @@
                 <td>{{ ticket.id }}</td>
                 <td>{{ ticket.label }}</td>
                 <td>{{ ticket.description }}</td>
-                <td>
-                    <a href="{{ path('app_ticket_show', {'id': ticket.id}) }}">voir</a>
-                    <a href="{{ path('app_ticket_edit', {'id': ticket.id}) }}">modifier</a>
-                    <a href="{{ path('app_ticket_delete', {'id': ticket.id}) }}">supprimer</a>
+                <td class="d-md-flex justify-content-md-around">
+                    <a class="btn btn-secondary btn-sm col mx-2" href="{{ path('app_ticket_show', {'id': ticket.id}) }}">voir</a>
+                    <a class="btn btn-secondary btn-sm col mx-2" href="{{ path('app_ticket_edit', {'id': ticket.id}) }}">modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="4">Aucun ticket trouvé</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_ticket_new') }}">Create new</a>
+    <a class="btn btn-secondary" href="{{ path('app_ticket_new') }}">Nouveau ticket</a>
 {% endblock %}
