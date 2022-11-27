@@ -28,12 +28,15 @@ class TicketController extends AbstractController
         $form = $this->createForm(TicketType::class, $ticket);
         $form->handleRequest($request);
 
+        $ticket->setUser($this->getUser());
+
         if ($form->isSubmitted() && $form->isValid()) {
             $ticketRepository->save($ticket, true);
 
             return $this->redirectToRoute('app_ticket_index', [], Response::HTTP_SEE_OTHER);
         }
-
+        $session = $request->getSession();
+        $session->getFlashBag()->add('success', 'Ticket ajouté avec succès !');
         return $this->renderForm('ticket/new.html.twig', [
             'ticket' => $ticket,
             'form' => $form,
@@ -71,8 +74,9 @@ class TicketController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$ticket->getId(), $request->request->get('_token'))) {
             $ticketRepository->remove($ticket, true);
+            $session = $request->getSession();
+            $session->getFlashBag()->add('danger', 'Ticket supprimé avec succès !');
         }
-
         return $this->redirectToRoute('app_ticket_index', [], Response::HTTP_SEE_OTHER);
     }
 }

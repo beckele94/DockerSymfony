@@ -3,12 +3,14 @@
 {% block title %}Ticket index{% endblock %}
 
 {% block body %}
+    {{ include('ticket/_flashbag.html.twig') }}
     <h1>Liste des tickets</h1>
 
     <table class="table table-bordered table-hover">
         <thead class="table-secondary">
             <tr>
                 <th>Id</th>
+                <th>IdUser</th>
                 <th>Label</th>
                 <th>Description</th>
                 <th>actions</th>
@@ -18,11 +20,13 @@
         {% for ticket in tickets %}
             <tr>
                 <td>{{ ticket.id }}</td>
+                <td>{{ ticket.user.id }}</td>
                 <td>{{ ticket.label }}</td>
                 <td>{{ ticket.description }}</td>
                 <td class="d-md-flex justify-content-md-around">
                     <a class="btn btn-secondary btn-sm col mx-2" href="{{ path('app_ticket_show', {'id': ticket.id}) }}">voir</a>
                     <a class="btn btn-secondary btn-sm col mx-2" href="{{ path('app_ticket_edit', {'id': ticket.id}) }}">modifier</a>
+                    {{ include('ticket/_delete_form.html.twig') }}
                 </td>
             </tr>
         {% else %}
