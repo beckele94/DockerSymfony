@@ -5,11 +5,13 @@ namespace App\Controller;
 use App\Entity\Ticket;
 use App\Form\TicketType;
 use App\Repository\TicketRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[isGranted('ROLE_USER')]
 #[Route('/ticket')]
 class TicketController extends AbstractController
 {
@@ -67,6 +69,9 @@ class TicketController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $ticketRepository->save($ticket, true);
+
+            $session = $request->getSession();
+            $session->getFlashBag()->add('success', 'Ticket modifié avec succès !');
 
             return $this->redirectToRoute('app_ticket_index', [], Response::HTTP_SEE_OTHER);
         }
