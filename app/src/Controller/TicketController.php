@@ -56,6 +56,12 @@ class TicketController extends AbstractController
     #[Route('/{id}/edit', name: 'app_ticket_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Ticket $ticket, TicketRepository $ticketRepository): Response
     {
+        if($ticket->getUser() !== $this->getUser()){
+            $session = $request->getSession();
+            $session->getFlashBag()->add('danger', 'Ce ticket ne vous appartient pas !');
+            return $this->redirectToRoute('app_ticket_index', [], Response::HTTP_SEE_OTHER);
+        }
+
         $form = $this->createForm(TicketType::class, $ticket);
         $form->handleRequest($request);
 
@@ -74,6 +80,12 @@ class TicketController extends AbstractController
     #[Route('/{id}', name: 'app_ticket_delete', methods: ['POST'])]
     public function delete(Request $request, Ticket $ticket, TicketRepository $ticketRepository): Response
     {
+        if($ticket->getUser() !== $this->getUser()){
+            $session = $request->getSession();
+            $session->getFlashBag()->add('danger', 'Ce ticket ne vous appartient pas !');
+            return $this->redirectToRoute('app_ticket_index', [], Response::HTTP_SEE_OTHER);
+        }
+
         if ($this->isCsrfTokenValid('delete'.$ticket->getId(), $request->request->get('_token'))) {
             $ticketRepository->remove($ticket, true);
             $session = $request->getSession();
