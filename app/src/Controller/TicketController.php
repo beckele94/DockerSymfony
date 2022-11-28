@@ -18,6 +18,7 @@ class TicketController extends AbstractController
     {
         return $this->render('ticket/list.html.twig', [
             'tickets' => $ticketRepository->findAll(),
+            'user' => $this->getUser(),
         ]);
     }
 
@@ -48,6 +49,7 @@ class TicketController extends AbstractController
     {
         return $this->render('ticket/show.html.twig', [
             'ticket' => $ticket,
+            'user' => $this->getUser(),
         ]);
     }
 

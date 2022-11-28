@@ -24,6 +24,9 @@ class Ticket
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
+    #[ORM\ManyToOne(inversedBy: 'ticket')]
+    private ?TicketStatus $ticketStatus = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -61,6 +64,18 @@ class Ticket
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getTicketStatus(): ?TicketStatus
+    {
+        return $this->ticketStatus;
+    }
+
+    public function setTicketStatus(?TicketStatus $ticketStatus): self
+    {
+        $this->ticketStatus = $ticketStatus;
 
         return $this;
     }

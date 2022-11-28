@@ -3,7 +3,10 @@
 namespace App\Form;
 
 use App\Entity\Ticket;
+use App\Entity\TicketStatus;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,6 +17,10 @@ class TicketType extends AbstractType
         $builder
             ->add('label')
             ->add('description')
+            ->add('ticketStatus', EntityType::class, [
+                'class' => TicketStatus::class,
+                'choice_label' => 'label',
+            ])
         ;
     }
 
