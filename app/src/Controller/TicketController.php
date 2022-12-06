@@ -18,6 +18,9 @@ class TicketController extends AbstractController
     #[Route('/', name: 'app_ticket_index', methods: ['GET'])]
     public function index(TicketRepository $ticketRepository): Response
     {
+        if(in_array('ROLE_ADMIN', $this->getUser()->getRoles())){
+            return $this->redirectToRoute('admin_user_list', [], Response::HTTP_SEE_OTHER);
+        }
         return $this->render('ticket/list.html.twig', [
             'tickets' => $ticketRepository->findAll(),
             'user' => $this->getUser(),
@@ -36,10 +39,11 @@ class TicketController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $ticketRepository->save($ticket, true);
 
+            $session = $request->getSession();
+            $session->getFlashBag()->add('success', 'Ticket ajouté avec succès !');
+
             return $this->redirectToRoute('app_ticket_index', [], Response::HTTP_SEE_OTHER);
         }
-        $session = $request->getSession();
-        $session->getFlashBag()->add('success', 'Ticket ajouté avec succès !');
         return $this->renderForm('ticket/new.html.twig', [
             'ticket' => $ticket,
             'form' => $form,
@@ -58,7 +62,8 @@ class TicketController extends AbstractController
     #[Route('/{id}/edit', name: 'app_ticket_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Ticket $ticket, TicketRepository $ticketRepository): Response
     {
-        if($ticket->getUser() !== $this->getUser()){
+        //condition pour verifier le proprietaire du ticket et verif si pas admin
+        if($ticket->getUser() !== $this->getUser() && !in_array('ROLE_ADMIN', $this->getUser()->getRoles())){
             $session = $request->getSession();
             $session->getFlashBag()->add('danger', 'Ce ticket ne vous appartient pas !');
             return $this->redirectToRoute('app_ticket_index', [], Response::HTTP_SEE_OTHER);

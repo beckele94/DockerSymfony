@@ -12,16 +12,21 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/">Accueil</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" >Mes tickets</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/ticket/new">Ajouter un ticket</a></li>
-                        <li><a class="dropdown-item" href="/ticket/">Voir mes tickets</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/account">Mon compte</a>
-                </li>
+
+
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item">
+                        <strong><a class="nav-link text-danger" href="/admin/users">ADMINISTRATION</a></strong>
+                    </li>
+                {% else %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" >Mes tickets</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/ticket/new">Ajouter un ticket</a></li>
+                            <li><a class="dropdown-item" href="/ticket/">Voir mes tickets</a></li>
+                        </ul>
+                    </li>
+                {% endif %}
             </ul>
 
             <span class="d-flex gap-2">
